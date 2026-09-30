@@ -24,6 +24,15 @@ app.get('/api/produits/:id', (req, res) => {
     res.status(200).json(produit);
 });
 
+app.get('/api/produits/nom/:nom', (req, res) => {
+    const nom = req.params.nom.toLowerCase();
+    const produit = produits.find(p => p.nom.toLowerCase() === nom);
+    if (!produit) {
+        return res.status(404).json({ message: 'Produit introuvable' });
+    }
+    res.status(200).json(produit);
+});
+
 app.post('/api/produits/add', (req, res) => {
     const { nom, description, prix, categorie } = req.body;
     const nouveauProduit = {
